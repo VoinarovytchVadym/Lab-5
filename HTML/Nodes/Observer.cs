@@ -1,4 +1,4 @@
-﻿namespace HTML;
+﻿namespace HTML.Nodes;
 
 public class Observer
 {
