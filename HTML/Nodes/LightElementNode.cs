@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using HTML.States;
 
 namespace HTML.Nodes;
 
@@ -10,15 +11,8 @@ public class LightElementNode(string tagName, string display, string closingType
     private string ClosingType { get; set; } = closingType;
     private List<string> Classes { get; set;} = classes;
     public List<LightNode> Childes { get;} = childes;
-    private readonly Observer _observer = new Observer();
-    public void AddEventListener(string eventType, Action listener)
-    {
-        _observer.AddEventListener(eventType, listener);
-    }
-    public void TriggerEvent(string eventType)
-    {
-        _observer.TriggerEvent(eventType);
-    }
+    private IElementState CurrentState { get; set; } = new NormalState();
+    
     public override string OuterHTML
     {
         get
@@ -100,4 +94,18 @@ public class LightElementNode(string tagName, string display, string closingType
                 break;
         }
     }
+    public void ChangeState(IElementState newState)
+    {
+        CurrentState = newState;
+    }
+    public void Click()
+    {
+        CurrentState.HandleClick(this);
+    }
+
+    public void Hover()
+    {
+        CurrentState.HandleHover(this);
+    }
+    
 }
