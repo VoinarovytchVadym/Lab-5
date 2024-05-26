@@ -1,13 +1,15 @@
-﻿namespace HTML.Nodes;
+﻿using System.Diagnostics;
+
+namespace HTML.Nodes;
 
 public class LightElementNode(string tagName, string display, string closingType, List<string> classes, List<LightNode> childes)
     : LightNode
 {
-    public string TagName { get; } = tagName;
-    public string Display { get; } = display;
-    public string ClosingType { get; } = closingType;
-    public List<string> Classes { get; } = classes;
-    public List<LightNode> Childes { get; } = childes;
+    private string TagName { get; set; } = tagName;
+    private string Display { get; set; } = display;
+    private string ClosingType { get; set; } = closingType;
+    private List<string> Classes { get; set;} = classes;
+    public List<LightNode> Childes { get;} = childes;
     private readonly Observer _observer = new Observer();
     public void AddEventListener(string eventType, Action listener)
     {
@@ -54,5 +56,48 @@ public class LightElementNode(string tagName, string display, string closingType
         }
 
         return value;
+    }
+
+    public string GetAttributeValue(string attributeName)
+    {
+        switch(attributeName)
+        {
+            case "TagName":
+                return TagName;
+                break;
+            case "Display":
+                return Display;
+                break;
+            case "ClosingType":
+                return ClosingType;
+                break;
+            case "Classes":
+                return string.Join(", ", Classes);
+                break;
+            case "Childes":
+                return string.Join(", ", Childes.ConvertAll(node => node.OuterHTML));
+                break;
+            default:
+                return "";
+        }
+    }
+
+    public void SetAttributeValue(string attributeName, string newValue)
+    {
+        switch(attributeName)
+        {
+            case "TagName":
+                TagName = newValue;
+                break;
+            case "Display":
+                Display = newValue;
+                break;
+            case "ClosingType":
+                ClosingType = newValue;
+                break;
+            case "Classes":
+                Classes = new List<string>(newValue.Split(new string[] { ", " }, StringSplitOptions.None));
+                break;
+        }
     }
 }
