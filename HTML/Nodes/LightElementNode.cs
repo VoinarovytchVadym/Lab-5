@@ -9,7 +9,7 @@ public class LightElementNode(string tagName, string display, string closingType
     private string TagName { get; set; } = tagName;
     private string Display { get; set; } = display;
     private string ClosingType { get; set; } = closingType;
-    public List<string> Classes { get; set;} = classes;
+    public List<string> Classes { get; private set;} = classes;
     public List<LightNode> Childes { get;} = childes;
     private IElementState CurrentState { get; set; } = new NormalState();
     
