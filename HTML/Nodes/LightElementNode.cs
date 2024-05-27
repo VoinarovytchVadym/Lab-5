@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using HTML.LifeCycleHooks;
 using HTML.States;
 
 namespace HTML.Nodes;
@@ -6,12 +7,13 @@ namespace HTML.Nodes;
 public class LightElementNode(string tagName, string display, string closingType, List<string> classes, List<LightNode> childes)
     : LightNode
 {
-    private string TagName { get; set; } = tagName;
+    public string TagName { get; set; } = tagName;
     private string Display { get; set; } = display;
     private string ClosingType { get; set; } = closingType;
     public List<string> Classes { get; set;} = classes;
     public List<LightNode> Childes { get;} = childes;
     private IElementState CurrentState { get; set; } = new NormalState();
+    private NodeLifeCycleHooks _hooks = new NodeLifeCycleHooks();
     
     public override string OuterHTML
     {
@@ -107,5 +109,9 @@ public class LightElementNode(string tagName, string display, string closingType
     {
         CurrentState.HandleHover(this);
     }
-    
+
+    public void RunLifeCycleHooks()
+    {
+        _hooks.Run(this);
+    }
 }

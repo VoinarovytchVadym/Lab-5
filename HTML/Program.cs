@@ -1,4 +1,5 @@
-﻿using HTML.Nodes;
+﻿using HTML.LifeCycleHooks;
+using HTML.Nodes;
 using HTML.Visitor;
 
 namespace HTML;
@@ -13,7 +14,7 @@ internal abstract class Program
         LightElementNode div4 = new LightElementNode("div", "block", "normal", ["other"], []);
         LightElementNode div5 = new LightElementNode("div", "block", "normal", ["target", "other"], []);
         LightElementNode html = new LightElementNode("body", "", "normal", 
-            [], 
+            ["HTML"], 
             [div1,div2,div3,div4,div5]);
         HTMLDocument document = new HTMLDocument(html);
         ClassSearchVisitor visitor = new ClassSearchVisitor("target");
@@ -23,5 +24,6 @@ internal abstract class Program
         {
             Console.WriteLine(item.OuterHTML);
         }
+        html.RunLifeCycleHooks();
     }
 }
