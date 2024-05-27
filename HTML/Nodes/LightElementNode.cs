@@ -54,26 +54,15 @@ public class LightElementNode(string tagName, string display, string closingType
 
     public string GetAttributeValue(string attributeName)
     {
-        switch(attributeName)
+        return attributeName switch
         {
-            case "TagName":
-                return TagName;
-                break;
-            case "Display":
-                return Display;
-                break;
-            case "ClosingType":
-                return ClosingType;
-                break;
-            case "Classes":
-                return string.Join(", ", Classes);
-                break;
-            case "Childes":
-                return string.Join(", ", Childes.ConvertAll(node => node.OuterHTML));
-                break;
-            default:
-                return "";
-        }
+            "TagName" => TagName,
+            "Display" => Display,
+            "ClosingType" => ClosingType,
+            "Classes" => string.Join(", ", Classes),
+            "Childes" => string.Join(", ", Childes.ConvertAll(node => node.OuterHTML)),
+            _ => ""
+        };
     }
 
     public void SetAttributeValue(string attributeName, string newValue)
@@ -90,7 +79,7 @@ public class LightElementNode(string tagName, string display, string closingType
                 ClosingType = newValue;
                 break;
             case "Classes":
-                Classes = new List<string>(newValue.Split(new string[] { ", " }, StringSplitOptions.None));
+                Classes = [..newValue.Split([", "], StringSplitOptions.None)];
                 break;
         }
     }

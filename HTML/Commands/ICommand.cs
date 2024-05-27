@@ -1,4 +1,4 @@
-﻿namespace HTML.Comands;
+﻿namespace HTML.Commands;
 
 public interface ICommand
 {

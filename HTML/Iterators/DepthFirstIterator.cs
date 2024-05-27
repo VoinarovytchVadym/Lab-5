@@ -4,28 +4,28 @@ namespace HTML.Iterators;
 
 public class DepthFirstIterator : IIterator
 {
-    private Stack<LightNode> stack = new Stack<LightNode>();
+    private readonly Stack<LightNode> _stack = new Stack<LightNode>();
 
     public DepthFirstIterator(LightNode root)
     {
-        stack.Push(root);
+        _stack.Push(root);
     }
 
     public bool HasNext()
     {
-        return stack.Count > 0;
+        return _stack.Count > 0;
     }
 
     public LightNode Next()
     {
         if (HasNext())
         {
-            LightNode node = stack.Pop();
+            LightNode node = _stack.Pop();
             if (node is LightElementNode elementNode)
             {
                 foreach (var child in elementNode.Childes)
                 {
-                    stack.Push(child);
+                    _stack.Push(child);
                 }
             }
             return node;

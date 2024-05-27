@@ -1,11 +1,11 @@
 ﻿using HTML.Nodes;
 
-namespace HTML.Comands;
+namespace HTML.Commands;
 
 public class ChangeAttributeCommand(LightElementNode node, string attributeName, string newValue)
     : ICommand
 {
-    private readonly string oldValue = node.GetAttributeValue(attributeName);
+    private readonly string _oldValue = node.GetAttributeValue(attributeName);
 
     public void Execute()
     {
@@ -14,6 +14,6 @@ public class ChangeAttributeCommand(LightElementNode node, string attributeName,
 
     public void Undo()
     {
-        node.SetAttributeValue(attributeName, oldValue);
+        node.SetAttributeValue(attributeName, _oldValue);
     }
 }

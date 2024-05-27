@@ -1,34 +1,33 @@
-﻿namespace HTML.Comands;
+﻿namespace HTML.Commands;
 
 public class CommandHistory
 {
-    private readonly Stack<ICommand> executedCommands = new Stack<ICommand>();
-    private readonly Stack<ICommand> undoneCommands = new Stack<ICommand>();
+    private readonly Stack<ICommand> _executedCommands = new Stack<ICommand>();
+    private readonly Stack<ICommand> _undoneCommands = new Stack<ICommand>();
 
     public void AddCommand(ICommand command)
     {
-        executedCommands.Push(command);
-        // Під час додавання нової команди очищаємо стек команд, які були скасовані
-        undoneCommands.Clear();
+        _executedCommands.Push(command);
+        _undoneCommands.Clear();
     }
 
     public void UndoLastCommand()
     {
-        if (executedCommands.Count > 0)
+        if (_executedCommands.Count > 0)
         {
-            ICommand lastCommand = executedCommands.Pop();
+            ICommand lastCommand = _executedCommands.Pop();
             lastCommand.Undo();
-            undoneCommands.Push(lastCommand);
+            _undoneCommands.Push(lastCommand);
         }
     }
 
     public void RedoLastUndoneCommand()
     {
-        if (undoneCommands.Count > 0)
+        if (_undoneCommands.Count > 0)
         {
-            ICommand lastUndoneCommand = undoneCommands.Pop();
+            ICommand lastUndoneCommand = _undoneCommands.Pop();
             lastUndoneCommand.Execute();
-            executedCommands.Push(lastUndoneCommand);
+            _executedCommands.Push(lastUndoneCommand);
         }
     }
 }

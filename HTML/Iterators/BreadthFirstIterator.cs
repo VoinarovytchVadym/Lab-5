@@ -4,28 +4,28 @@ namespace HTML.Iterators;
 
 public class BreadthFirstIterator : IIterator
 {
-    private Queue<LightNode> queue = new Queue<LightNode>();
+    private readonly Queue<LightNode> _queue = new Queue<LightNode>();
 
     public BreadthFirstIterator(LightNode root)
     {
-        queue.Enqueue(root);
+        _queue.Enqueue(root);
     }
 
     public bool HasNext()
     {
-        return queue.Count > 0;
+        return _queue.Count > 0;
     }
 
     public LightNode Next()
     {
         if (HasNext())
         {
-            LightNode node = queue.Dequeue();
+            LightNode node = _queue.Dequeue();
             if (node is LightElementNode elementNode)
             {
                 foreach (var child in elementNode.Childes)
                 {
-                    queue.Enqueue(child);
+                    _queue.Enqueue(child);
                 }
             }
             return node;
