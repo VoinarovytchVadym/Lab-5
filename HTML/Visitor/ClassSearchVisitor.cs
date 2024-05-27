@@ -4,18 +4,18 @@ namespace HTML.Visitor;
 
 public class ClassSearchVisitor(string targetClass) : IElementVisitor
 {
-    private List<LightElementNode> foundElements = [];
+    private readonly List<LightElementNode> _foundElements = [];
 
     public void VisitElement(LightElementNode element)
     {
         if (element.Classes.Contains(targetClass))
         {
-            foundElements.Add(element);
+            _foundElements.Add(element);
         }
     }
 
     public List<LightElementNode> GetFoundElements()
     {
-        return foundElements;
+        return _foundElements;
     }
 }
